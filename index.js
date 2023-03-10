@@ -38,8 +38,18 @@ const url = require("url");
 const server = http.createServer((req, res) => {
     const pathname = req.url;
 
+    console.log("[Asimo] pathname:", pathname);
     if (pathname === "/" || pathname === "/overview") {
         res.end("This is the OVERVIEW!");
+    } else if (pathname === "/api") {
+        fs.readFile(`${__dirname}/dev-data/data.json`, "utf-8", (err, data) => {
+            const productData = JSON.parse(data);
+            console.log(productData);
+            res.writeHead(200, {
+                "Content-Type": "application/json",
+            });
+            res.end(data);
+        });
     } else if (pathname === "/product") {
         res.end("This is the PRODUCT!");
     } else {
