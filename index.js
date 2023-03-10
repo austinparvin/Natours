@@ -11,6 +11,7 @@ console.log("Text written!");
 
 // Callback hell!
 fs.readFile(__dirname + "/txt/start.txt", "utf8", (err, data1) => {
+    if (err) return console.log("ERROR!");
     fs.readFile(__dirname + `/txt/${data1}.txt`, "utf8", (err, data2) => {
         console.log("[Asimo] data2:", data2);
         fs.readFile(__dirname + `/txt/append.txt`, "utf8", (err, data3) => {
