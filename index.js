@@ -35,20 +35,40 @@ const url = require("url");
 
 /*********************************************     SERVER   *********************************************/
 
+const templateOverview = fs.readFileSync(
+    `${__dirname}/templates/template-overview.html`,
+    "utf-8"
+);
+const templateProduct = fs.readFileSync(
+    `${__dirname}/templates/template-product.html`,
+    "utf-8"
+);
+const templateCard = fs.readFileSync(
+    `${__dirname}/templates/template-card.html`,
+    "utf-8"
+);
+
 const productData = fs.readFileSync(`${__dirname}/dev-data/data.json`, "utf-8");
 const dataObj = JSON.parse(productData);
 
 const server = http.createServer((req, res) => {
     const pathname = req.url;
 
-    console.log("[Asimo] pathname:", pathname);
+    // Overview page
     if (pathname === "/" || pathname === "/overview") {
-        res.end("This is the OVERVIEW!");
+        res.writeHead(200, { "Content-Type": "text/html" });
+        res.end(templateOverview);
+
+        // Product page
+    } else if (pathname === "/product") {
+        res.end("This is the PRODUCT!");
+
+        // API page
     } else if (pathname === "/api") {
         res.writeHead(200, { "Content-Type": "application/json" });
         res.end(productData);
-    } else if (pathname === "/product") {
-        res.end("This is the PRODUCT!");
+
+        // 404 page
     } else {
         res.writeHead(404, {
             "Content-Type": "text/html",
