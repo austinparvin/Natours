@@ -3,6 +3,7 @@ const http = require("http");
 const url = require("url");
 
 const { replaceTemplate } = require("./modules/replaceTemplate");
+const slugify = require("slugify");
 
 /*********************************************     FILES     *********************************************/
 
@@ -52,7 +53,10 @@ const templateCard = fs.readFileSync(
 
 const productData = fs.readFileSync(`${__dirname}/dev-data/data.json`, "utf-8");
 const dataObj = JSON.parse(productData);
-
+const slugs = dataObj.map((product) =>
+    slugify(product.productName, { lower: true })
+);
+console.log("[Asimo] slugs:", slugs);
 const server = http.createServer((req, res) => {
     const { query, pathname } = url.parse(req.url, true);
 
