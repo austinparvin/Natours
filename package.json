@@ -1,0 +1,22 @@
+{
+  "name": "node-express-mongodb",
+  "version": "1.0.0",
+  "description": "Node.js example",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/austinparvin/node-express-mongodb.git"
+  },
+  "author": "Austin Parvin",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/austinparvin/node-express-mongodb/issues"
+  },
+  "homepage": "https://github.com/austinparvin/node-express-mongodb#readme",
+  "dependencies": {
+    "slugify": "^1.6.5"
+  }
+}
