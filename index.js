@@ -69,23 +69,27 @@ const productData = fs.readFileSync(`${__dirname}/dev-data/data.json`, "utf-8");
 const dataObj = JSON.parse(productData);
 
 const server = http.createServer((req, res) => {
-    const pathname = req.url;
+    const { query, pathname } = url.parse(req.url, true);
 
     // Overview page
     if (pathname === "/" || pathname === "/overview") {
         const cardsHtml = dataObj.map((el) => {
             return replaceTemplate(templateCard, el);
         });
-        const output = templateOverview.replace(
+        const overviewHtml = templateOverview.replace(
             /{%PRODUCT_CARDS%}/g,
             cardsHtml
         );
         res.writeHead(200, { "Content-Type": "text/html" });
-        res.end(output);
+        res.end(overviewHtml);
 
         // Product page
     } else if (pathname === "/product") {
-        res.end("This is the PRODUCT!");
+        const product = dataObj[query.id];
+        const productHtml = replaceTemplate(templateProduct, product);
+
+        res.writeHead(200, { "Content-Type": "text/html" });
+        res.end(productHtml);
 
         // API page
     } else if (pathname === "/api") {
