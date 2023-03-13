@@ -6,7 +6,15 @@ const {
   createTour,
   updateTour,
   deleteTour,
+  checkId,
 } = require('../controllers/tourController');
+
+router.param('id', (req, res, next, val) => {
+  console.log('[Austin] val:', val);
+  next();
+});
+
+router.param('id', checkId);
 
 // prettier-ignore
 router
