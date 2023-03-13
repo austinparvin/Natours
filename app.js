@@ -32,15 +32,15 @@ app.get('/api/v1/tours', (req, res) => {
 
 app.get('/api/v1/tours/:id', (req, res) => {
   const { id } = req.params;
+  const tour = tours.find((tour) => tour.id == id);
 
-  if (id > tours.length) {
+  if (!tour) {
     return res.status(404).send({
       status: 'fail',
       message: 'Invalid Id',
     });
   }
 
-  const tour = tours.find((tour) => tour.id == id);
   res.status(200).json({
     status: 'success',
     data: {
