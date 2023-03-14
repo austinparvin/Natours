@@ -7,12 +7,15 @@ const {
   createTour,
   updateTour,
   deleteTour,
+  aliasTopTours,
 } = require('../controllers/tourController');
 
 router.param('id', (req, res, next, val) => {
   console.log('[Austin] val:', val);
   next();
 });
+
+router.route('/top-5-cheap').get(aliasTopTours, getAllTours);
 
 // prettier-ignore
 router
