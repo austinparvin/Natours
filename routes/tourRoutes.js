@@ -7,6 +7,7 @@ const {
   updateTour,
   deleteTour,
   checkId,
+  validateTourData,
 } = require('../controllers/tourController');
 
 router.param('id', (req, res, next, val) => {
@@ -20,7 +21,7 @@ router.param('id', checkId);
 router
   .route('/')
   .get(getAllTours)
-  .post(createTour);
+  .post(validateTourData, createTour);
 
 // prettier-ignore
 router
