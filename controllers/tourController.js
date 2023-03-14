@@ -111,7 +111,7 @@ const getTourStats = async (req, res) => {
       },
       {
         $group: {
-          _id: '$difficulty',
+          _id: { $toUpper: '$difficulty' },
           numTours: { $sum: 1 },
           numRatings: { $sum: '$ratingsQuantity' },
           avgRating: { $avg: '$ratingsAverage' },
@@ -120,6 +120,8 @@ const getTourStats = async (req, res) => {
           maxPrice: { $max: '$price' },
         },
       },
+      { $sort: { averagePrice: 1 } },
+      // { $match: { _id: { $ne: 'EASY' } } },
     ]);
 
     res.status(200).json({
