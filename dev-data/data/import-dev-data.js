@@ -30,7 +30,7 @@ const importData = async () => {
 const deleteData = async () => {
   try {
     await Tour.deleteMany();
-    console.log('[Austin] Tour Collection Data Delete');
+    console.log('[Austin] Tour Collection Data Deleted');
   } catch (error) {
     console.log('[Austin] error:', error);
   }
