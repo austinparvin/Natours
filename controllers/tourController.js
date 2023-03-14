@@ -112,6 +112,8 @@ const getTourStats = async (req, res) => {
       {
         $group: {
           _id: null,
+          numTours: { $sum: 1 },
+          numRatings: { $sum: '$ratingsQuantity' },
           avgRating: { $avg: '$ratingsAverage' },
           avgPrice: { $avg: '$price' },
           minPrice: { $min: '$price' },
