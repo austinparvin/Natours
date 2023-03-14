@@ -1,4 +1,5 @@
 const express = require('express');
+
 const router = express.Router();
 const {
   getAllTours,
@@ -6,8 +7,6 @@ const {
   createTour,
   updateTour,
   deleteTour,
-  checkId,
-  validateTourData,
 } = require('../controllers/tourController');
 
 router.param('id', (req, res, next, val) => {
@@ -15,13 +14,11 @@ router.param('id', (req, res, next, val) => {
   next();
 });
 
-router.param('id', checkId);
-
 // prettier-ignore
 router
   .route('/')
   .get(getAllTours)
-  .post(validateTourData, createTour);
+  .post(createTour);
 
 // prettier-ignore
 router
