@@ -8,6 +8,7 @@ const {
   updateTour,
   deleteTour,
   aliasTopTours,
+  getTourStats,
 } = require('../controllers/tourController');
 
 router.param('id', (req, res, next, val) => {
@@ -17,6 +18,7 @@ router.param('id', (req, res, next, val) => {
 
 router.route('/top-5-cheap').get(aliasTopTours, getAllTours);
 
+router.route('/tour-stats').get(getTourStats);
 // prettier-ignore
 router
   .route('/')
