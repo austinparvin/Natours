@@ -77,17 +77,17 @@ tourSchema.pre('save', function (next) {
   next();
 });
 
-// eslint-disable-next-line prefer-arrow-callback
-tourSchema.pre('save', function (next) {
-  console.log('[Austin] Will save document...');
-  next();
-});
+// // eslint-disable-next-line prefer-arrow-callback
+// tourSchema.pre('save', function (next) {
+//   console.log('[Austin] Will save document...');
+//   next();
+// });
 
-// eslint-disable-next-line prefer-arrow-callback
-tourSchema.post('save', function (doc, next) {
-  console.log('[Austin] doc:', doc);
-  next();
-});
+// // eslint-disable-next-line prefer-arrow-callback
+// tourSchema.post('save', function (doc, next) {
+//   console.log('[Austin] doc:', doc);
+//   next();
+// });
 
 const Tour = mongoose.model('Tour', tourSchema);
 
