@@ -93,9 +93,17 @@ tourSchema.pre('save', function (next) {
 //   next();
 // });
 
-// Query Middleware: ran before .find(), .findOne()...
+// Query Middleware: runs before .find(), .findOne(), ...
 tourSchema.pre(/^find/, function (next) {
   this.find({ secretTour: false });
+  this.start = Date.now();
+  next();
+});
+
+// runs after .find(), .findOne, ...
+tourSchema.post(/^find/, function (docs, next) {
+  console.log('[Austin] docs:', docs);
+  console.log('[Austin] Query took (ms):', Date.now() - this.start);
   next();
 });
 
