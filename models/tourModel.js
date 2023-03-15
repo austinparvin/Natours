@@ -93,9 +93,8 @@ tourSchema.pre('save', function (next) {
 //   next();
 // });
 
-// Query Middleware: ran before .find()
-// eslint-disable-next-line prefer-arrow-callback
-tourSchema.pre('find', function (next) {
+// Query Middleware: ran before .find(), .findOne()...
+tourSchema.pre(/^find/, function (next) {
   this.find({ secretTour: false });
   next();
 });
