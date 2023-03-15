@@ -102,8 +102,14 @@ tourSchema.pre(/^find/, function (next) {
 
 // runs after .find(), .findOne, ...
 tourSchema.post(/^find/, function (docs, next) {
-  console.log('[Austin] docs:', docs);
   console.log('[Austin] Query took (ms):', Date.now() - this.start);
+  next();
+});
+
+// Aggregation Middleware:
+tourSchema.pre('aggregate', function (next) {
+  this.pipeline().unshift({ $match: { secretTour: false } });
+  console.log('[Austin] this:', this);
   next();
 });
 
