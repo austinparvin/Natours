@@ -171,6 +171,7 @@ const getMonthlyPlan = async (req, res) => {
           _id: 0,
         },
       },
+      { $sort: { numberTourStarts: -1 } },
     ]);
 
     res.status(200).json({
