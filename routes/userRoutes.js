@@ -1,4 +1,5 @@
 const express = require('express');
+
 const router = express.Router();
 
 const {
@@ -8,6 +9,10 @@ const {
   updateUser,
   deleteUser,
 } = require('../controllers/userController');
+
+const { signup } = require('../controllers/authController');
+
+router.post('/signup', signup);
 
 // prettier-ignore
 router
