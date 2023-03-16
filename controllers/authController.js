@@ -16,6 +16,7 @@ const signup = catchAsync(async (req, res, next) => {
     email: req.body.email,
     password: req.body.password,
     passwordConfirm: req.body.passwordConfirm,
+    passwordChangedAt: req.body.passwordChangedAt,
   });
 
   const token = signToken(newUser._id);
@@ -77,8 +78,14 @@ const protect = catchAsync(async (req, res, next) => {
   }
 
   // 4) check it user changed password after JWT issued
-  
+  if (freshUser.changedPasswordAfter(decoded.iat)) {
+    return next(
+      new AppError('User recently changed password.  Please log in again.', 401)
+    );
+  }
 
+  // Grant Access to protected route
+  req.user = freshUser;
   next();
 });
 
