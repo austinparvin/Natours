@@ -8,6 +8,7 @@ const {
   createUser,
   updateUser,
   deleteUser,
+  updateCurrentUser,
 } = require('../controllers/userController');
 
 const {
@@ -25,6 +26,8 @@ router.post('/login', login);
 router.post('/forgotPassword', forgotPassword);
 router.patch('/resetPassword/:token', resetPassword);
 router.patch('/updatePassword', protect, updatePassword);
+
+router.patch('/updateCurrentUser', protect, updateCurrentUser);
 
 // prettier-ignore
 router
