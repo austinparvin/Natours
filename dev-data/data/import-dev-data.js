@@ -2,6 +2,8 @@ const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const fs = require('fs');
 const Tour = require('../../models/tourModel');
+const User = require('../../models/userModel');
+const checkAsync = require('../../utils/catchAsync');
 
 dotenv.config();
 const DB = process.env.DB.replace('<PASSWORD>', process.env.DB_PASSWORD);
@@ -17,6 +19,8 @@ const tours = JSON.parse(
   fs.readFileSync(`${__dirname}/tours-simple.json`, 'utf-8')
 );
 
+const users = JSON.parse(fs.readFileSync(`${__dirname}/users.json`, 'utf-8'));
+
 const importData = async () => {
   try {
     await Tour.create(tours);
@@ -24,7 +28,7 @@ const importData = async () => {
   } catch (error) {
     console.log('[Austin] error:', error);
   }
-  process.exit();
+  process.exit(0);
 };
 
 const deleteData = async () => {
@@ -34,11 +38,25 @@ const deleteData = async () => {
   } catch (error) {
     console.log('[Austin] error:', error);
   }
-  process.exit();
+  process.exit(0);
 };
 
-if (process.argv[2] === '--import') {
+const resetUsers = checkAsync(async () => {
+  try {
+    await User.deleteMany();
+    console.log('[Austin] User Collection Data Deleted');
+    await User.create(users);
+    console.log('[Austin] User Data Successfully Loaded');
+  } catch (error) {
+    console.log('[Austin] error:', error);
+  }
+  process.exit(0);
+});
+const command = process.argv[2];
+if (command === '--import') {
   importData();
-} else if (process.argv[2] === '--delete') {
+} else if (command === '--delete') {
   deleteData();
+} else if (command === '--user-reset') {
+  resetUsers();
 }

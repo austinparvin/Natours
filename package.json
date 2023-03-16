@@ -8,6 +8,7 @@
     "start:prod": "NODE_ENV=production nodemon server.js",
     "import": "node ./dev-data/data/import-dev-data.js --import",
     "delete": "node ./dev-data/data/import-dev-data.js --delete",
+    "user-reset": "node ./dev-data/data/import-dev-data.js --user-reset",
     "debug": "ndb server.js"
   },
   "repository": {
