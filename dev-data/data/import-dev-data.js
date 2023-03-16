@@ -45,7 +45,24 @@ const resetUsers = checkAsync(async () => {
   try {
     await User.deleteMany();
     console.log('[Austin] User Collection Data Deleted');
-    await User.create(users);
+
+    const sanitizedData = users.map((el) => {
+      const userData = {
+        name: el.name,
+        email: el.email,
+        role: el.role,
+        active: el.active,
+        photo: el.photo,
+        password: 'password',
+        passwordConfirm: 'password',
+      };
+      return userData;
+    });
+
+    await Promise.all(
+      sanitizedData.map((sanitizedUser) => User.create(sanitizedUser))
+    );
+
     console.log('[Austin] User Data Successfully Loaded');
   } catch (error) {
     console.log('[Austin] error:', error);
