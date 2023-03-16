@@ -12,6 +12,8 @@ const {
   getMonthlyPlan,
 } = require('../controllers/tourController');
 
+const { protect } = require('../controllers/authController');
+
 router.param('id', (req, res, next, val) => {
   console.log('[Austin] val:', val);
   next();
@@ -24,7 +26,7 @@ router.route('/monthly-plan/:year').get(getMonthlyPlan);
 // prettier-ignore
 router
   .route('/')
-  .get(getAllTours)
+  .get(protect, getAllTours)
   .post(createTour);
 
 // prettier-ignore

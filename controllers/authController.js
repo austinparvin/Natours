@@ -51,7 +51,28 @@ const login = catchAsync(async (req, res, next) => {
   });
 });
 
+const protect = catchAsync(async (req, res, next) => {
+  // 1) get token, check if there
+  let token;
+  if (
+    req.headers.authorization &&
+    req.headers.authorization.startsWith('Bearer')
+  ) {
+    token = req.headers.authorization.split(' ')[1];
+  }
+
+  if (!token) {
+    return next(new AppError('You are not logged in', 401));
+  }
+  // 2) verification token
+  // 3) check if user still exists
+  // 4) check it user changed password after JWT issued
+
+  next();
+});
+
 module.exports = {
   signup,
   login,
+  protect,
 };
