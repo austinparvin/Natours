@@ -15,9 +15,7 @@ mongoose
     console.log('[Austin] DB connection successful');
   });
 
-const tours = JSON.parse(
-  fs.readFileSync(`${__dirname}/tours-simple.json`, 'utf-8')
-);
+const tours = JSON.parse(fs.readFileSync(`${__dirname}/tours.json`, 'utf-8'));
 
 const users = JSON.parse(fs.readFileSync(`${__dirname}/users.json`, 'utf-8'));
 
