@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const reviewSchema = mongoose.Schema(
   {
-    description: {
+    review: {
       type: String,
       required: [true, 'Review must contain a description'],
     },
