@@ -60,6 +60,20 @@ const updateCurrentUser = catchAsync(async (req, res, next) => {
   });
 });
 
+const deleteCurrentUser = catchAsync(async (req, res, next) => {
+  await User.findByIdAndUpdate(
+    req.user.id,
+    { active: false },
+    {
+      new: true,
+    }
+  );
+  res.status(204).json({
+    status: 'success',
+    data: null,
+  });
+});
+
 const updateUser = (req, res) => {
   res.status(500).json({
     status: 'error',
@@ -80,4 +94,5 @@ module.exports = {
   updateUser,
   deleteUser,
   updateCurrentUser,
+  deleteCurrentUser,
 };

@@ -9,6 +9,7 @@ const {
   updateUser,
   deleteUser,
   updateCurrentUser,
+  deleteCurrentUser,
 } = require('../controllers/userController');
 
 const {
@@ -28,6 +29,7 @@ router.patch('/resetPassword/:token', resetPassword);
 router.patch('/updatePassword', protect, updatePassword);
 
 router.patch('/updateCurrentUser', protect, updateCurrentUser);
+router.delete('/deleteCurrentUser', protect, deleteCurrentUser);
 
 // prettier-ignore
 router
