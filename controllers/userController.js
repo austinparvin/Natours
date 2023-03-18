@@ -18,6 +18,11 @@ const createUser = (req, res) => {
   });
 };
 
+const getCurrentUser = (req, res, next) => {
+  req.params.id = req.user.id;
+  next();
+};
+
 const updateCurrentUser = catchAsync(async (req, res, next) => {
   if (req.body.password || req.body.passwordConfirm) {
     next(
@@ -70,4 +75,5 @@ module.exports = {
   deleteUser,
   updateCurrentUser,
   deleteCurrentUser,
+  getCurrentUser,
 };
