@@ -12,17 +12,18 @@ const {
 
 const { protect, restrictTo } = require('../controllers/authController');
 
+router.use(protect);
 // prettier-ignore
 router
   .route('/')
   .get(getAllReviews)
-  .post(protect, restrictTo('user'), setTourUserIds, createReview);
+  .post(restrictTo('user'), setTourUserIds, createReview);
 
 // prettier-ignore
 router
   .route('/:id')
   .get(getReview)
-  .patch(updateReview)
-  .delete(protect, restrictTo('admin'), deleteReview)
+  .patch(restrictTo('user, admin'), updateReview)
+  .delete(restrictTo('user, admin'), deleteReview)
 
 module.exports = router;

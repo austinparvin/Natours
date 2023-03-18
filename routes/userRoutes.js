@@ -20,6 +20,7 @@ const {
   resetPassword,
   updatePassword,
   protect,
+  restrictTo,
 } = require('../controllers/authController');
 
 router.post('/signup', signup);
@@ -27,12 +28,15 @@ router.post('/login', login);
 
 router.post('/forgotPassword', forgotPassword);
 router.patch('/resetPassword/:token', resetPassword);
-router.patch('/updatePassword', protect, updatePassword);
 
-router.get('/currentUser', protect, getCurrentUser, getUser);
-router.patch('/currentUser', protect, updateCurrentUser);
-router.delete('/currentUser', protect, deleteCurrentUser);
+// Protect (require auth) for any route below
+router.use(protect);
+router.patch('/updatePassword', updatePassword);
+router.get('/currentUser', getCurrentUser, getUser);
+router.patch('/currentUser', updateCurrentUser);
+router.delete('/currentUser', deleteCurrentUser);
 
+router.use(restrictTo('admin'));
 // prettier-ignore
 router
   .route('/')
