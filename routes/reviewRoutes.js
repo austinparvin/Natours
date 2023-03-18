@@ -7,6 +7,7 @@ const {
   deleteReview,
   updateReview,
   setTourUserIds,
+  getReview,
 } = require('../controllers/reviewController');
 
 const { protect, restrictTo } = require('../controllers/authController');
@@ -20,6 +21,7 @@ router
 // prettier-ignore
 router
   .route('/:id')
+  .get(getReview)
   .patch(updateReview)
   .delete(protect, restrictTo('admin'), deleteReview)
 

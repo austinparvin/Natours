@@ -1,9 +1,8 @@
 const Tour = require('../models/tourModel');
 const APIFeatures = require('../utils/apiFeatures');
 const catchAsync = require('../utils/catchAsync');
-const AppError = require('../utils/appError');
 
-const { deleteOne, updateOne, createOne } = require('./handlerFactory');
+const { deleteOne, updateOne, createOne, getOne } = require('./handlerFactory');
 
 const aliasTopTours = (req, res, next) => {
   req.query.limit = '5';
@@ -29,23 +28,8 @@ const getAllTours = catchAsync(async (req, res, next) => {
   });
 });
 
-const getTour = catchAsync(async (req, res, next) => {
-  const { id } = req.params;
-  const tour = await Tour.findById(id).populate('reviews');
-
-  if (!tour) {
-    return next(new AppError('No tour found with that id', 404));
-  }
-
-  res.status(200).json({
-    status: 'success',
-    data: {
-      tour: tour,
-    },
-  });
-});
-
 const createTour = createOne(Tour);
+const getTour = getOne(Tour, { path: 'reviews' });
 const updateTour = updateOne(Tour);
 const deleteTour = deleteOne(Tour);
 
