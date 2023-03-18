@@ -3,9 +3,9 @@ const AppError = require('../utils/appError');
 
 const deleteOne = (Model) =>
   catchAsync(async (req, res, next) => {
-    const doc = await Model.findByIdAndDelete(req.params.id);
+    const deletedDoc = await Model.findByIdAndDelete(req.params.id);
 
-    if (!doc) {
+    if (!deletedDoc) {
       return next(new AppError('No document found with that id', 404));
     }
 
@@ -17,19 +17,31 @@ const deleteOne = (Model) =>
 
 const updateOne = (Model) =>
   catchAsync(async (req, res, next) => {
-    const doc = await Model.findByIdAndUpdate(req.params.id, req.body, {
+    const updatedDoc = await Model.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
       runValidators: true,
     });
 
-    if (!doc) {
+    if (!updatedDoc) {
       return next(new AppError('No doc found with that id', 404));
     }
 
     res.status(200).json({
       status: 'success',
       data: {
-        data: doc,
+        data: updatedDoc,
+      },
+    });
+  });
+
+const createOne = (Model) =>
+  catchAsync(async (req, res, next) => {
+    const newDoc = await Model.create(req.body);
+
+    res.status(201).json({
+      status: 'success',
+      data: {
+        data: newDoc,
       },
     });
   });
@@ -37,4 +49,5 @@ const updateOne = (Model) =>
 module.exports = {
   deleteOne,
   updateOne,
+  createOne,
 };
