@@ -5,6 +5,7 @@ const {
   getAllReviews,
   createReview,
   deleteReview,
+  updateReview,
 } = require('../controllers/reviewController');
 
 const { protect, restrictTo } = require('../controllers/authController');
@@ -18,6 +19,7 @@ router
 // prettier-ignore
 router
   .route('/:id')
+  .patch(updateReview)
   .delete(protect, restrictTo('admin'), deleteReview)
 
 module.exports = router;
