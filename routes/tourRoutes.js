@@ -10,6 +10,7 @@ const {
   aliasTopTours,
   getTourStats,
   getMonthlyPlan,
+  getToursWithin,
 } = require('../controllers/tourController');
 
 const reviewRouter = require('./reviewRoutes');
@@ -29,6 +30,11 @@ router.route('/tour-stats').get(getTourStats);
 router
   .route('/monthly-plan/:year')
   .get(protect, restrictTo('admin', 'lead-guides'), getMonthlyPlan);
+
+router
+  .route('/tours-within/:distance/center/:latlng/unit/:unit')
+  .get(getToursWithin);
+
 // prettier-ignore
 router
   .route('/')
