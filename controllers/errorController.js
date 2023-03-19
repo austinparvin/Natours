@@ -1,6 +1,7 @@
 const AppError = require('../utils/appError');
 
 const sendErrorForDev = (err, req, res) => {
+  console.log('[Austin] err:', err);
   if (req.originalUrl.startsWith('/api')) {
     res.status(err.statusCode).json({
       status: err.status,
@@ -17,6 +18,7 @@ const sendErrorForDev = (err, req, res) => {
 };
 
 const sendErrorForProd = (err, req, res) => {
+  console.log('[Austin] err:', err);
   if (req.originalUrl.startsWith('/api')) {
     // Operational, trusted error: send to client
     if (err.isOperational) {

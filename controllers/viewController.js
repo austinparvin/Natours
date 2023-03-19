@@ -1,4 +1,5 @@
 const Tour = require('../models/tourModel');
+const User = require('../models/userModel');
 const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
 
@@ -41,6 +42,26 @@ const getTour = catchAsync(async (req, res, next) => {
   });
 });
 
+const updateUserData = catchAsync(async (req, res, next) => {
+  console.log('[Austin] req:', req);
+  const updatedUser = await User.findByIdAndUpdate(
+    req.user.id,
+    {
+      name: req.body.name,
+      email: req.body.email,
+    },
+    {
+      new: true,
+      runValidators: true,
+    }
+  );
+
+  res.status(200).render('account', {
+    title: 'Account',
+    user: updatedUser,
+  });
+});
+
 const allowCDNScripts = (req, res, next) => {
   res.set('Content-Security-Policy', "frame-src 'self'");
   next();
@@ -51,5 +72,6 @@ module.exports = {
   getTour,
   getLoginForm,
   getAccount,
+  updateUserData,
   allowCDNScripts,
 };

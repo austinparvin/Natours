@@ -46,6 +46,12 @@ app.use(
     limit: '10kb',
   })
 );
+app.use(
+  express.urlencoded({
+    extended: true,
+    limit: '10kb',
+  })
+);
 app.use(cookieParser());
 
 // Data Sanitization against NoSQL query injection
@@ -77,7 +83,7 @@ app.use(
 // Test middleware
 app.use((req, res, next) => {
   req.requestTime = new Date().toISOString();
-  console.log('[Austin] req.cookies:', req.cookies);
+  console.log('[Austin] req.originalUrl:', req.originalUrl);
   next();
 });
 
