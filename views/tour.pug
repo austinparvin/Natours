@@ -7,6 +7,18 @@ mixin overviewBox(label, text, icon)
     span.overview-box__label= label
     span.overview-box__text= text
 
+mixin reviewCard(review)
+  .reviews__card
+    .reviews__avatar
+      img.reviews__avatar-img(src=`/img/users/${review.user.photo}`, alt= `${review.user.name}`)
+      h6.reviews__user= review.user.name
+    p.reviews__text= review.review
+    .reviews__rating
+      each star in [1,2,3,4,5]
+        svg.reviews__star(class=`reviews__star--${review.rating >= star ? 'active' : 'inactive'}`)
+          use(xlink:href='/img/icons.svg#icon-star')
+     
+    
 block content 
   section.section-header
     .header__hero
@@ -56,7 +68,7 @@ block content
       - const paragraphs = tour.description.split('\n');
 
       each p in paragraphs
-         p.description__text= p
+        p.description__text= p
 
   section.section-pictures
     each img, i in tour.images
@@ -69,23 +81,8 @@ block content
 
   section.section-reviews
     .reviews
-
-      .reviews__card
-        .reviews__avatar
-          img.reviews__avatar-img(src='/img/users/user-7.jpg', alt='Jim Brown')
-          h6.reviews__user Jim Brown
-        p.reviews__text Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque dignissimos sint quo commodi corrupti accusantium veniam saepe numquam.
-        .reviews__rating
-          svg.reviews__star.reviews__star--active
-            use(xlink:href='/img/icons.svg#icon-star')
-          svg.reviews__star.reviews__star--active
-            use(xlink:href='/img/icons.svg#icon-star')
-          svg.reviews__star.reviews__star--active
-            use(xlink:href='/img/icons.svg#icon-star')
-          svg.reviews__star.reviews__star--active
-            use(xlink:href='/img/icons.svg#icon-star')
-          svg.reviews__star.reviews__star--active
-            use(xlink:href='/img/icons.svg#icon-star')
+      each review in tour.reviews
+        +reviewCard(review)
 
   section.section-cta
     .cta
