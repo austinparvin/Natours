@@ -10,9 +10,15 @@ const login = async (email, password) => {
         password,
       },
     });
-    console.log('[Austin] res:', res);
+
+    if (res.data.status === 'success') {
+      alert('logged in successfully!');
+      window.setTimeout(() => {
+        location.assign('/');
+      }, 1500);
+    }
   } catch (err) {
-    console.log('[Austin] err:', err);
+    alert(err.response.data.message);
   }
 };
 
