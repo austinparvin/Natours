@@ -32,24 +32,7 @@ const dataReset = async () => {
 
     await Tour.create(tours);
     console.log('[Austin] Tour Collection Data Created');
-
-    const sanitizedData = users.map((el) => {
-      const userData = {
-        name: el.name,
-        email: el.email,
-        role: el.role,
-        active: el.active,
-        photo: el.photo,
-        password: 'password',
-        passwordConfirm: 'password',
-      };
-      return userData;
-    });
-
-    await Promise.all(
-      sanitizedData.map((sanitizedUser) => User.create(sanitizedUser))
-    );
-
+    await User.create(users, { validateBeforeSave: false });
     console.log('[Austin] User Collection Data Created');
     await Review.create(reviews);
     console.log('[Austin] Review Collection Data Created');
