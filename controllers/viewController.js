@@ -19,6 +19,12 @@ const getLoginForm = catchAsync(async (req, res) => {
   });
 });
 
+const getAccount = catchAsync(async (req, res) => {
+  res.status(200).render('account', {
+    title: 'Account',
+  });
+});
+
 const getTour = catchAsync(async (req, res, next) => {
   const tour = await Tour.findOne({ slug: req.params.slug }).populate({
     path: 'reviews',
@@ -40,4 +46,10 @@ const allowCDNScripts = (req, res, next) => {
   next();
 };
 
-module.exports = { getOverview, getTour, getLoginForm, allowCDNScripts };
+module.exports = {
+  getOverview,
+  getTour,
+  getLoginForm,
+  getAccount,
+  allowCDNScripts,
+};
