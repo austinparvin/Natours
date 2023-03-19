@@ -3,11 +3,16 @@
   "version": "1.0.0",
   "description": "",
   "main": "app.js",
+  "targets": {
+    "main": false
+  },
   "scripts": {
     "start:dev": "nodemon server.js",
     "start:prod": "NODE_ENV=production nodemon server.js",
     "data-reset": "node ./dev-data/data/import-dev-data.js --data-reset",
-    "debug": "ndb server.js"
+    "debug": "ndb server.js",
+    "watch:js": "parcel watch --no-hmr ./public/js/index.js --dist-dir ./public/js/bundled",
+    "build": "parcel build ./public/js/index.js --dist-dir ./public/js/bundled"
   },
   "repository": {
     "type": "git",
@@ -51,6 +56,7 @@
     "node": ">=18.0.0"
   },
   "devDependencies": {
-    "ndb": "^1.1.5"
+    "ndb": "^1.1.5",
+    "parcel": "^2.8.3"
   }
 }
