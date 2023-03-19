@@ -35,4 +35,9 @@ const getTour = catchAsync(async (req, res, next) => {
   });
 });
 
-module.exports = { getOverview, getTour, getLoginForm };
+const allowCDNScripts = (req, res, next) => {
+  res.set('Content-Security-Policy', "frame-src 'self'");
+  next();
+};
+
+module.exports = { getOverview, getTour, getLoginForm, allowCDNScripts };

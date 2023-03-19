@@ -29,14 +29,7 @@ const limiter = rateLimit({
 
 // MIDDLEWARE STACK
 // Set security HTTP headers
-app.use(
-  helmet.contentSecurityPolicy({
-    directives: {
-      defaultSrc: ["'self'", 'blob:', 'https://*.mapbox.com'],
-      scriptSrc: ["'self'", 'https://*.mapbox.com', "'unsafe-inline'", 'blob:'],
-    },
-  })
-);
+app.use(helmet());
 
 // Development Logging
 if (process.env.NODE_ENV === 'development') {
