@@ -1,31 +1,48 @@
 const AppError = require('../utils/appError');
 
-const sendErrorForDev = (err, res) => {
-  res.status(err.statusCode).json({
-    status: err.status,
-    error: err,
-    message: err.message,
-    stack: err.stack,
-  });
-};
-
-const sendErrorForProd = (err, res) => {
-  // Operational, trusted error: send to client
-  if (err.isOperational) {
+const sendErrorForDev = (err, req, res) => {
+  if (req.originalUrl.startsWith('/api')) {
     res.status(err.statusCode).json({
       status: err.status,
+      error: err,
       message: err.message,
+      stack: err.stack,
     });
-
-    // Programming or other unknown error: don't leak error details
   } else {
-    console.log('[Austin] err 💥:', err);
+    res.status(err.statusCode).render('error', {
+      title: `Something went wrong`,
+      msg: err.message,
+    });
+  }
+};
 
-    res.status(500).json({
+const sendErrorForProd = (err, req, res) => {
+  if (req.originalUrl.startsWith('/api')) {
+    // Operational, trusted error: send to client
+    if (err.isOperational) {
+      return res.status(err.statusCode).json({
+        status: err.status,
+        message: err.message,
+      });
+    }
+
+    return res.status(500).json({
       status: 'error',
       message: 'Something went wrong',
     });
   }
+
+  if (err.isOperational) {
+    return res.status(err.statusCode).render('error', {
+      title: `Something went wrong`,
+      msg: err.message,
+    });
+  }
+
+  return res.status(err.statusCode).render('error', {
+    title: `Something went wrong`,
+    msg: 'Please try again later',
+  });
 };
 
 const handleCastErrorDB = (err) => {
@@ -57,17 +74,19 @@ module.exports = (err, req, res, next) => {
   err.status = err.status || 'error';
 
   if (process.env.NODE_ENV === 'development') {
-    sendErrorForDev(err, res);
+    sendErrorForDev(err, req, res);
   } else if (process.env.NODE_ENV === 'production') {
-    if (err.name === 'CastError') sendErrorForProd(handleCastErrorDB(err), res);
-    if (err.code === 11000) sendErrorForProd(handleDuplicateFieldsDB(err), res);
+    if (err.name === 'CastError')
+      sendErrorForProd(handleCastErrorDB(err), req, res);
+    if (err.code === 11000)
+      sendErrorForProd(handleDuplicateFieldsDB(err), req, res);
     if (err.name === 'ValidationError')
-      sendErrorForProd(handleValidationErrorDB(err), res);
+      sendErrorForProd(handleValidationErrorDB(err), req, res);
     if (err.name === 'JsonWebTokenError')
-      sendErrorForProd(handleJWTError(), res);
+      sendErrorForProd(handleJWTError(), req, res);
     if (err.name === 'TokenExpiredError')
-      sendErrorForProd(handleExpiredTokenError(), res);
+      sendErrorForProd(handleExpiredTokenError(), req, res);
 
-    sendErrorForProd(err, res);
+    sendErrorForProd(err, req, res);
   }
 };
