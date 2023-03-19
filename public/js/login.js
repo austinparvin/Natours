@@ -33,6 +33,19 @@ const login = async (email, password) => {
   }
 };
 
+const logout = async () => {
+  try {
+    const res = await axios({
+      method: 'GET',
+      url: 'http://localhost:3000/api/v1/users/logout',
+    });
+    if ((res.data.status = 'success')) location.reload(true);
+  } catch (err) {
+    console.log(err.response);
+    showAlert('error', 'Error logging out! Try again.');
+  }
+};
+
 const loginForm = document.querySelector('.form');
 if (loginForm) {
   loginForm.addEventListener('submit', (e) => {
@@ -42,3 +55,6 @@ if (loginForm) {
     login(email, password);
   });
 }
+
+const logoutButton = document.querySelector('.nav__el--logout');
+if (logoutButton) logoutButton.addEventListener('click', logout);

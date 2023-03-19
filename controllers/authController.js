@@ -65,6 +65,14 @@ const login = catchAsync(async (req, res, next) => {
   createSendJWTToken(user, 200, res);
 });
 
+const logout = (req, res) => {
+  res.cookie('jwt', '', {
+    expires: new Date(Date.now() + 10 * 1000),
+    httpOnly: true,
+  });
+  res.status(200).json({ status: 'success' });
+};
+
 const protect = catchAsync(async (req, res, next) => {
   // 1) get token, check if there
   let token;
@@ -234,6 +242,7 @@ const updatePassword = catchAsync(async (req, res, next) => {
 module.exports = {
   signup,
   login,
+  logout,
   protect,
   restrictTo,
   forgotPassword,
