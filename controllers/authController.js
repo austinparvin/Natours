@@ -103,6 +103,34 @@ const protect = catchAsync(async (req, res, next) => {
   next();
 });
 
+// Only for rendered pages, there should be no error
+const isLoggedIn = catchAsync(async (req, res, next) => {
+  // 1) get token, check if there
+  if (req.cookies.jwt) {
+    // 2) verification token
+    const decoded = await promisify(jwt.verify)(
+      req.cookies.jwt,
+      process.env.JWT_SECRET
+    );
+
+    // 3) check if user still exists
+    const freshUser = await User.findById(decoded.id);
+    if (!freshUser) {
+      return next();
+    }
+
+    // 4) check it user changed password after JWT issued
+    if (freshUser.changedPasswordAfter(decoded.iat)) {
+      return next();
+    }
+
+    // There is a logged in user
+    res.locals.user = freshUser;
+    return next();
+  }
+  next();
+});
+
 const restrictTo =
   (...roles) =>
   (req, res, next) => {
@@ -211,4 +239,5 @@ module.exports = {
   forgotPassword,
   resetPassword,
   updatePassword,
+  isLoggedIn,
 };
