@@ -4,6 +4,7 @@ const fs = require('fs');
 const Tour = require('../../models/tourModel');
 const User = require('../../models/userModel');
 const Review = require('../../models/reviewModel');
+const bcrypt = require('bcryptjs');
 
 dotenv.config();
 const DB = process.env.DB.replace('<PASSWORD>', process.env.DB_PASSWORD);
@@ -33,6 +34,19 @@ const dataReset = async () => {
     await Tour.create(tours);
     console.log('[Austin] Tour Collection Data Created');
     await User.create(users, { validateBeforeSave: false });
+
+    const promises = users.map(async (user) => {
+      const password = await bcrypt.hash(process.env.USER_PASSWORD, 12);
+      await User.findByIdAndUpdate(
+        user._id,
+        { password },
+        {
+          new: true,
+          runValidators: false,
+        }
+      );
+    });
+    await Promise.all(promises);
     console.log('[Austin] User Collection Data Created');
     await Review.create(reviews);
     console.log('[Austin] Review Collection Data Created');
