@@ -33,7 +33,7 @@ router.patch('/resetPassword/:token', resetPassword);
 
 // Protect (require auth) for any route below
 router.use(protect);
-router.patch('/updatePassword', updatePassword);
+router.patch('/password', updatePassword);
 router.get('/currentUser', getCurrentUser, getUser);
 router.patch('/currentUser', updateCurrentUser);
 router.delete('/currentUser', deleteCurrentUser);

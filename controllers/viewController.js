@@ -43,7 +43,6 @@ const getTour = catchAsync(async (req, res, next) => {
 });
 
 const updateUserData = catchAsync(async (req, res, next) => {
-  console.log('[Austin] req:', req);
   const updatedUser = await User.findByIdAndUpdate(
     req.user.id,
     {

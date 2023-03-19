@@ -30,8 +30,11 @@ block content
         .user-view__form-container
           h2.heading-secondary.ma-bt-md Your account settings
 
+          //- Without API
+          //- form.form.form-user-data(role='form' action='/submit-user-data' method='POST' )
 
-          form.form.form-user-data(role='form' action='/submit-user-data' method='POST' )
+          //- With API
+          form.form.form-user-data
             .form__group
               label.form__label(for='name') Name
               input#name.form__input(type='text', value=`${user.name}`, required, name='name')
@@ -48,15 +51,15 @@ block content
 
         .user-view__form-container
           h2.heading-secondary.ma-bt-md Password change
-          form.form.form-user-settings
+          form.form.form-user-password
             .form__group
               label.form__label(for='password-current') Current password
-              input#password-current.form__input(type='password', placeholder='••••••••', required, minlength='8')
+              input#password-current.form__input(type='password', placeholder='••••••••', required, minlength='8', name='password-current')
             .form__group
               label.form__label(for='password') New password
-              input#password.form__input(type='password', placeholder='••••••••', required, minlength='8')
+              input#password.form__input(type='password', placeholder='••••••••', required, minlength='8', name='password')
             .form__group.ma-bt-lg
               label.form__label(for='password-confirm') Confirm password
-              input#password-confirm.form__input(type='password', placeholder='••••••••', required, minlength='8')
+              input#password-confirm.form__input(type='password', placeholder='••••••••', required, minlength='8', name='password-confirm')
             .form__group.right
-              button.btn.btn--small.btn--green Save password
+              button#btn--save-password.btn.btn--small.btn--green Save password
