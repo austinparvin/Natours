@@ -5,7 +5,7 @@ const AppError = require('../utils/appError');
 const { deleteOne, updateOne, getOne, getAll } = require('./handlerFactory');
 
 const multerStorage = multer.diskStorage({
-  dest: (req, file, cb) => {
+  destination: (req, file, cb) => {
     cb(null, 'public/img/users');
   },
   filename: (req, file, cb) => {
