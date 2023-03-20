@@ -3,6 +3,10 @@ const User = require('../models/userModel');
 const AppError = require('../utils/appError');
 const { deleteOne, updateOne, getOne, getAll } = require('./handlerFactory');
 
+const upload = multer({ dest: 'public/img/users' });
+
+const uploadUserPhoto = upload.single('photo');
+
 const filterObj = (obj, ...allowedFields) => {
   const newObj = {};
   Object.keys(obj).forEach((el) => {
@@ -76,4 +80,5 @@ module.exports = {
   updateCurrentUser,
   deleteCurrentUser,
   getCurrentUser,
+  uploadUserPhoto,
 };
