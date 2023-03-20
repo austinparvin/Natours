@@ -11,6 +11,7 @@ const {
   deleteCurrentUser,
   getCurrentUser,
   uploadUserPhoto,
+  resizeUserPhoto,
 } = require('../controllers/userController');
 
 const {
@@ -35,7 +36,12 @@ router.patch('/resetPassword/:token', resetPassword);
 router.use(protect);
 router.patch('/password', updatePassword);
 router.get('/currentUser', getCurrentUser, getUser);
-router.patch('/currentUser', uploadUserPhoto, updateCurrentUser);
+router.patch(
+  '/currentUser',
+  uploadUserPhoto,
+  resizeUserPhoto,
+  updateCurrentUser
+);
 router.delete('/currentUser', deleteCurrentUser);
 
 router.use(restrictTo('admin'));
