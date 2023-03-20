@@ -40,16 +40,14 @@ module.exports = class Email {
       to: this.to,
       subject,
       html,
-      text: htmlToText.fromString(html),
+      text: htmlToText.toString(html),
       // html:
     };
 
-    await this.newTransport().sendEmail(mailOptions);
+    await this.newTransport().sendMail(mailOptions);
   }
 
   async sendWelcome() {
     await this.send('welcome', 'Welcome to the Natours Family!');
   }
-
-  
 };
