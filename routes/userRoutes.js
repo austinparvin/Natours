@@ -1,5 +1,8 @@
 const express = require('express');
-
+const multer = require('multer');
+const upload = multer({
+  dest: 'public/img/users',
+});
 const router = express.Router();
 
 const {
@@ -35,7 +38,7 @@ router.patch('/resetPassword/:token', resetPassword);
 router.use(protect);
 router.patch('/password', updatePassword);
 router.get('/currentUser', getCurrentUser, getUser);
-router.patch('/currentUser', updateCurrentUser);
+router.patch('/currentUser', upload.single('photo'), updateCurrentUser);
 router.delete('/currentUser', deleteCurrentUser);
 
 router.use(restrictTo('admin'));
