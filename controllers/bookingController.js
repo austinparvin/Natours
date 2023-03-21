@@ -1,8 +1,14 @@
 const Stripe = require('stripe');
 
-const Tour = require('../models/tourModel');
 const catchAsync = require('../utils/catchAsync');
 const Booking = require('../models/bookingModel');
+const {
+  deleteOne,
+  updateOne,
+  createOne,
+  getOne,
+  getAll,
+} = require('./handlerFactory');
 
 const createBookingCheckout = catchAsync(async (req, res, next) => {
   const { tour, user, price } = req.query;
@@ -48,4 +54,18 @@ const getCheckoutSession = catchAsync(async (req, res, next) => {
   });
 });
 
-module.exports = { getCheckoutSession, createBookingCheckout };
+const getAllBookings = getAll(Booking);
+const createBooking = createOne(Booking);
+const getBooking = getOne(Booking);
+const updateBooking = updateOne(Booking);
+const deleteBooking = deleteOne(Booking);
+
+module.exports = {
+  getCheckoutSession,
+  createBookingCheckout,
+  getAllBookings,
+  createBooking,
+  getBooking,
+  updateBooking,
+  deleteBooking,
+};
