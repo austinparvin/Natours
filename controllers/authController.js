@@ -75,6 +75,7 @@ const logout = (req, res) => {
   res.status(200).json({ status: 'success' });
 };
 
+// For routes that require user to be logged in and if not returns errors
 const protect = catchAsync(async (req, res, next) => {
   // 1) get token, check if there
   let token;
@@ -114,7 +115,7 @@ const protect = catchAsync(async (req, res, next) => {
   next();
 });
 
-// Only for rendered pages, there should be no error
+// For routes that do not require a user to be logged in, but may have conditional data if so
 const isLoggedIn = catchAsync(async (req, res, next) => {
   // 1) get token, check if there
   if (req.cookies.jwt) {
