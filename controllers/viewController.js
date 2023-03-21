@@ -5,10 +5,8 @@ const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
 
 const getOverview = catchAsync(async (req, res) => {
-  // get tour data
   const tours = await Tour.find();
-  // build template
-  // render template with tour data
+  
   res.status(200).render('overview', {
     title: 'All Tours',
     tours,
@@ -68,12 +66,10 @@ const allowCDNScripts = (req, res, next) => {
 };
 
 const getMyTours = catchAsync(async (req, res, next) => {
-  // 1) Find all bookings
   const bookings = await Booking.find({ user: req.user.id });
 
-  // 2) Find tours with the returned IDs
-  const tourIDs = bookings.map((el) => el.tour);
-  const tours = await Tour.find({ _id: { $in: tourIDs } });
+  const tourIds = bookings.map((el) => el.tour);
+  const tours = await Tour.find({ _id: { $in: tourIds } });
 
   res.status(200).render('overview', {
     title: 'My Tours',
