@@ -22,7 +22,6 @@ const writeFilePromise = (file, data) => {
 const getDogPic = async () => {
   try {
     const data = await readFilePromise(`${__dirname}/dog.txt`);
-    console.log(`Breed: ${data}`);
     const res1Promise = superagent.get(
       `https://dog.ceo/api/breed/${data}/images/random`
     );

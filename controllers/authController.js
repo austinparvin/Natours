@@ -222,7 +222,6 @@ const updatePassword = catchAsync(async (req, res, next) => {
 
   // get user from collection
   const user = await User.findById(req.user.id).select('+password');
-  console.log('[Austin] user:', user);
 
   // check if posted password is correct
   if (!(await user.correctPassword(currentPassword, user.password))) {

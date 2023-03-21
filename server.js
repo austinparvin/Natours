@@ -16,7 +16,7 @@ mongoose
     useNewUrlParser: true,
   })
   .then(() => {
-    console.log('[Austin] DB connection successful');
+    console.log('DB connection successful');
   });
 
 const port = process.env.PORT || 3000;

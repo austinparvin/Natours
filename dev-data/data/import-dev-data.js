@@ -13,7 +13,7 @@ mongoose
     useNewUrlParser: true,
   })
   .then(() => {
-    console.log('[Austin] DB connection successful');
+    console.log('DB connection successful');
   });
 
 const tours = JSON.parse(fs.readFileSync(`${__dirname}/tours.json`, 'utf-8'));
@@ -25,14 +25,14 @@ const reviews = JSON.parse(
 const dataReset = async () => {
   try {
     await Tour.deleteMany();
-    console.log('[Austin] Tour Collection Data Deleted');
+    console.log('Tour Collection Data Deleted');
     await User.deleteMany();
-    console.log('[Austin] User Collection Data Deleted');
+    console.log('User Collection Data Deleted');
     await Review.deleteMany();
-    console.log('[Austin] Review Collection Data Deleted');
+    console.log('Review Collection Data Deleted');
 
     await Tour.create(tours);
-    console.log('[Austin] Tour Collection Data Created');
+    console.log('Tour Collection Data Created');
     await User.create(users, { validateBeforeSave: false });
 
     const promises = users.map(async (user) => {
@@ -47,11 +47,11 @@ const dataReset = async () => {
       );
     });
     await Promise.all(promises);
-    console.log('[Austin] User Collection Data Created');
+    console.log('User Collection Data Created');
     await Review.create(reviews);
-    console.log('[Austin] Review Collection Data Created');
+    console.log('Review Collection Data Created');
   } catch (error) {
-    console.log('[Austin] error:', error);
+    console.log('error:', error);
   }
   process.exit(0);
 };

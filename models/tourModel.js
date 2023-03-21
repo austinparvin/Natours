@@ -144,13 +144,13 @@ tourSchema.pre('save', function (next) {
 
 // // eslint-disable-next-line prefer-arrow-callback
 // tourSchema.pre('save', function (next) {
-//   console.log('[Austin] Will save document...');
+//   console.log('Will save document...');
 //   next();
 // });
 
 // // eslint-disable-next-line prefer-arrow-callback
 // tourSchema.post('save', function (doc, next) {
-//   console.log('[Austin] doc:', doc);
+//   console.log('doc:', doc);
 //   next();
 // });
 
@@ -167,14 +167,14 @@ tourSchema.pre(/^find/, function (next) {
 
 // runs after .find(), .findOne, ...
 tourSchema.post(/^find/, function (docs, next) {
-  console.log('[Austin] Query took (ms):', Date.now() - this.start);
+  console.log('Tour find query took (ms):', Date.now() - this.start);
   next();
 });
 
 // Aggregation Middleware:
 // tourSchema.pre('aggregate', function (next) {
 //   this.pipeline().unshift({ $match: { secretTour: false } });
-//   console.log('[Austin] this:', this);
+//   console.log('this:', this);
 //   next();
 // });
 

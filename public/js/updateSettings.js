@@ -36,7 +36,6 @@ if (settingsForm) {
 if (userPasswordForm) {
   userPasswordForm.addEventListener('submit', async (e) => {
     e.preventDefault();
-    console.log('[Austin] X');
     document.getElementById('btn--save-password').textContent = 'Updating...';
     const currentPassword = document.getElementById('password-current').value;
     const password = document.getElementById('password').value;
