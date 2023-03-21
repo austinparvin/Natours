@@ -6,6 +6,7 @@ const mongoSanitize = require('express-mongo-sanitize');
 const xss = require('xss-clean');
 const hpp = require('hpp');
 const cookieParser = require('cookie-parser');
+const compression = require('compression');
 
 const { helmet, csp } = require('./utils/helmet_csp_config');
 const AppError = require('./utils/appError');
@@ -54,6 +55,7 @@ app.use(
     limit: '10kb',
   })
 );
+app.use(compression());
 app.use(cookieParser());
 
 // Data Sanitization against NoSQL query injection
