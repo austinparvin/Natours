@@ -32,8 +32,8 @@ router.get('/logout', logout);
 router.post('/forgotPassword', forgotPassword);
 router.patch('/resetPassword/:token', resetPassword);
 
-// Protect (require auth) for any route below
 router.use(protect);
+
 router.patch('/password', updatePassword);
 router.get('/currentUser', getCurrentUser, getUser);
 router.patch(
@@ -45,6 +45,7 @@ router.patch(
 router.delete('/currentUser', deleteCurrentUser);
 
 router.use(restrictTo('admin'));
+
 // prettier-ignore
 router
   .route('/')

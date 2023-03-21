@@ -22,11 +22,6 @@ const { protect, restrictTo } = require('../controllers/authController');
 
 router.use('/:tourId/reviews', reviewRouter);
 
-// router.param('id', (req, res, next, val) => {
-//   console.log('Tour id:', val);
-//   next();
-// });
-
 router.route('/top-5-cheap').get(aliasTopTours, getAllTours);
 
 router.route('/tour-stats').get(getTourStats);

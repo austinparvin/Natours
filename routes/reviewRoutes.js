@@ -13,6 +13,7 @@ const {
 const { protect, restrictTo } = require('../controllers/authController');
 
 router.use(protect);
+
 // prettier-ignore
 router
   .route('/')

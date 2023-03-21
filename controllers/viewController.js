@@ -6,7 +6,7 @@ const AppError = require('../utils/appError');
 
 const getOverview = catchAsync(async (req, res) => {
   const tours = await Tour.find();
-  
+
   res.status(200).render('overview', {
     title: 'All Tours',
     tours,
@@ -41,25 +41,6 @@ const getTour = catchAsync(async (req, res, next) => {
   });
 });
 
-const updateUserData = catchAsync(async (req, res, next) => {
-  const updatedUser = await User.findByIdAndUpdate(
-    req.user.id,
-    {
-      name: req.body.name,
-      email: req.body.email,
-    },
-    {
-      new: true,
-      runValidators: true,
-    }
-  );
-
-  res.status(200).render('account', {
-    title: 'Account',
-    user: updatedUser,
-  });
-});
-
 const allowCDNScripts = (req, res, next) => {
   res.set('Content-Security-Policy', "frame-src 'self'");
   next();
@@ -82,7 +63,6 @@ module.exports = {
   getTour,
   getLoginForm,
   getAccount,
-  updateUserData,
   allowCDNScripts,
   getMyTours,
 };
