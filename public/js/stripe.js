@@ -12,7 +12,7 @@ const bookTour = async (tourId) => {
   try {
     const session = await axios({
       method: 'GET',
-      url: `http://localhost:3000/api/v1/bookings/checkout-session/${tourId}`,
+      url: `/api/v1/bookings/checkout-session/${tourId}`,
     });
 
     await stripe.redirectToCheckout({
