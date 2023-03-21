@@ -51,19 +51,16 @@ const signup = catchAsync(async (req, res, next) => {
 const login = catchAsync(async (req, res, next) => {
   const { email, password } = req.body;
 
-  // check if email and passwords exist
   if (!email || !password) {
     return next(new AppError('Please provide email AND password', 400));
   }
 
-  // check if user exists
   const user = await User.findOne({ email }).select('+password');
 
   if (!user || !(await user.correctPassword(password, user.password))) {
     return next(new AppError('Incorrect email or password', 401));
   }
 
-  // check JWT and send token to client
   createSendJWTToken(user, 200, res);
 });
 
@@ -102,7 +99,7 @@ const protect = catchAsync(async (req, res, next) => {
     );
   }
 
-  // 4) check it user changed password after JWT issued
+  // 4) check if user changed password after JWT issued
   if (freshUser.changedPasswordAfter(decoded.iat)) {
     return next(
       new AppError('User recently changed password.  Please log in again.', 401)
@@ -221,19 +218,19 @@ const resetPassword = catchAsync(async (req, res, next) => {
 const updatePassword = catchAsync(async (req, res, next) => {
   const { currentPassword, passwordConfirm, password } = req.body;
 
-  // get user from collection
+  // 1) get user from collection
   const user = await User.findById(req.user.id).select('+password');
 
-  // check if posted password is correct
+  // 2) check if posted password is correct
   if (!(await user.correctPassword(currentPassword, user.password))) {
     return next(new AppError('Password given was incorrect', 401));
   }
-  // if so update password
+  // 3) if so update password
   user.password = password;
   user.passwordConfirm = passwordConfirm;
   await user.save();
 
-  // log user in
+  // 4) log user in
   createSendJWTToken(user, 200, res);
 });
 
