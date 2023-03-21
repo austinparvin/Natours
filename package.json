@@ -1,5 +1,5 @@
 {
-  "name": "express-mongodb",
+  "name": "natours",
   "version": "1.0.0",
   "description": "",
   "main": "app.js",
@@ -14,14 +14,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/austinparvin/node-express-mongodb.git"
+    "url": "git+https://github.com/austinparvin/natours.git"
   },
   "author": "Austin Parvin",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/austinparvin/node-express-mongodb/issues"
+    "url": "https://github.com/austinparvin/natours/issues"
   },
-  "homepage": "https://github.com/austinparvin/node-express-mongodb#readme",
+  "homepage": "https://github.com/austinparvin/natours#readme",
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "compression": "^1.7.4",
