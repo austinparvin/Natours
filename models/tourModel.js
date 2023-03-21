@@ -117,44 +117,21 @@ tourSchema.index({ price: 1, ratingsAverage: -1 });
 tourSchema.index({ slug: 1 });
 tourSchema.index({ startLocation: '2dsphere' });
 
-// Virtual Properties
 tourSchema.virtual('durationWeeks').get(function () {
   return this.duration / 7;
 });
 
-// Virtual Populate
 tourSchema.virtual('reviews', {
   ref: 'Review',
   foreignField: 'tour',
   localField: '_id',
 });
 
-// Document Middleware: 'save' runs before .save() and .create() but NOT .insertMany()
 tourSchema.pre('save', function (next) {
   this.slug = slugify(this.name, { lower: true });
   next();
 });
 
-// EMBEDDING EXAMPLE
-// tourSchema.pre('save', async function (next) {
-//   const guidesPromises = this.guides.map(async (id) => await User.findById(id));
-//   this.guides = await Promise.all(guidesPromises);
-//   next();
-// });
-
-// // eslint-disable-next-line prefer-arrow-callback
-// tourSchema.pre('save', function (next) {
-//   console.log('Will save document...');
-//   next();
-// });
-
-// // eslint-disable-next-line prefer-arrow-callback
-// tourSchema.post('save', function (doc, next) {
-//   console.log('doc:', doc);
-//   next();
-// });
-
-// Query Middleware: runs before .find(), .findOne(), ...
 tourSchema.pre(/^find/, function (next) {
   this.find({ secretTour: false });
   this.populate({
@@ -165,7 +142,6 @@ tourSchema.pre(/^find/, function (next) {
   next();
 });
 
-// runs after .find(), .findOne, ...
 tourSchema.post(/^find/, function (docs, next) {
   console.log('Tour find query took (ms):', Date.now() - this.start);
   next();
