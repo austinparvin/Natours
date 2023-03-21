@@ -4,7 +4,6 @@ const {
   getTour,
   getLoginForm,
   getAccount,
-  updateUserData,
   allowCDNScripts,
   getMyTours,
 } = require('../controllers/viewController');
