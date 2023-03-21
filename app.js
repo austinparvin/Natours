@@ -21,7 +21,7 @@ const app = express();
 
 app.set('view engine', 'pug');
 app.set(`views`, path.join(__dirname, 'views'));
-// Serving static files
+
 app.use(express.static(path.join(__dirname, 'public')));
 
 const limiter = rateLimit({
@@ -30,7 +30,6 @@ const limiter = rateLimit({
   message: 'Too many requests from this IP, please try again in an hour!',
 });
 
-// MIDDLEWARE STACK
 // Set security HTTP headers
 app.use(helmet);
 csp(app);
@@ -40,7 +39,6 @@ if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
 }
 
-// Limit requests from same IP
 app.use('/api', limiter);
 
 // Body parser, reading data from the body into req.body
@@ -65,6 +63,7 @@ app.use(cookieParser());
   "password": "common-password"
 }
 */
+
 app.use(mongoSanitize());
 
 // Data sanitization against XSS
@@ -84,13 +83,10 @@ app.use(
   })
 );
 
-// Test middleware
 app.use((req, res, next) => {
   req.requestTime = new Date().toISOString();
   next();
 });
-
-// Router mounting
 
 app.use('/', viewRouter);
 app.use('/api/v1/tours', tourRouter);
@@ -98,7 +94,6 @@ app.use('/api/v1/users', userRouter);
 app.use('/api/v1/reviews', reviewRouter);
 app.use('/api/v1/bookings', bookingRouter);
 
-// 404 catch
 app.all('*', (req, res, next) => {
   const err = new AppError(
     `Cannot find ${req.originalUrl} on the server. ❌`,
@@ -108,7 +103,6 @@ app.all('*', (req, res, next) => {
   next(err);
 });
 
-// Error Handling Middleware
 app.use(globalErrorHandler);
 
 module.exports = app;
