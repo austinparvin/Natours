@@ -125,6 +125,14 @@ The API provides the following endpoints:
 * [validator](https://github.com/validatorjs/validator.js#readme): library of string validators and sanitizers
 * [xss-clean](https://github.com/jsonmaur/xss-clean#readme): sanitize user input coming from POST body, GET queries, and url params
 
+## Upcoming Additions:
+
+* [TypeScript](https://www.typescriptlang.org/)
+* [GraphQL](https://graphql.org/)
+* [AWS Services](https://aws.amazon.com/)
+* [React](https://react.dev/)
+* [Next.js](https://nextjs.org/)
+
 ## Author
 
 * Austin Parvin
