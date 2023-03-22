@@ -80,7 +80,7 @@ const webhookCheckout = catchAsync(async (req, res, next) => {
   }
 
   // Return a 200 response to acknowledge receipt of the event
-  res.sendStatus(200).json({
+  res.status(200).json({
     received: true,
   });
 });
