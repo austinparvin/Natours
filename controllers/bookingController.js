@@ -92,7 +92,6 @@ const deleteBooking = deleteOne(Booking);
 
 module.exports = {
   getCheckoutSession,
-  createBookingCheckout,
   getAllBookings,
   createBooking,
   getBooking,
