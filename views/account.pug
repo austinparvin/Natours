@@ -17,10 +17,9 @@ block content
           +navItem('#', 'My reviews', 'star')
           +navItem('#', 'Billing', 'credit-card')
           
-         - const isAdmin = user.role === 'admin' 
         if isAdmin
-        .admin-nav
-          h5.admin-nav__heading Admin
+          .admin-nav
+            h5.admin-nav__heading Admin
             ul.side-nav
               +navItem('#', 'Manage tours', 'map')
               +navItem('#', 'Manage users', 'users')
