@@ -30,7 +30,11 @@ const getCheckoutSession = catchAsync(async (req, res, next) => {
           product_data: {
             name: `${tour.name} Tour`,
             description: tour.summary,
-            images: [`https://www.natours.dev/img/tours/${tour.imageCover}`],
+            images: [
+              `${req.protocol}://${req.get('host')}/img/tours/${
+                tour.imageCover
+              }`,
+            ],
           },
         },
         quantity: 1,
@@ -45,7 +49,7 @@ const getCheckoutSession = catchAsync(async (req, res, next) => {
   });
 });
 
-const webhookCheckout = (req, res, next) => {
+const webhookCheckout = catchAsync(async (req, res, next) => {
   const sig = req.headers['stripe-signature'];
   const stripe = Stripe(process.env.STRIPE_SECRET_KEY);
   let event;
@@ -62,6 +66,7 @@ const webhookCheckout = (req, res, next) => {
   }
 
   const createBookingSession = catchAsync(async (session) => {
+    console.log('session:', session);
     const tour = session.client_reference_id;
     const user = (await User.findOne({ email: session.customer_email })).id;
     const price = session.line_items[0].price_data.unit_amount;
@@ -69,21 +74,17 @@ const webhookCheckout = (req, res, next) => {
   });
 
   // Handle the event
-  switch (event.type) {
-    case 'checkout.session.completed':
-      createBookingSession(event.data.object);
-      // Then define and call a function to handle the event checkout.session.completed
-      break;
-    // ... handle other event types
-    default:
-      console.log(`Unhandled event type ${event.type}`);
+  if (event.type === 'checkout.session.completed') {
+    await createBookingSession(event.data.object);
+  } else {
+    console.log(`Unhandled event type ${event.type}`);
   }
 
   // Return a 200 response to acknowledge receipt of the event
   res.sendStatus(200).json({
     received: true,
   });
-};
+});
 
 const getAllBookings = getAll(Booking);
 const createBooking = createOne(Booking);
