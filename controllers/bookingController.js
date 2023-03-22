@@ -80,7 +80,7 @@ const webhookCheckout = (req, res, next) => {
   }
 
   // Return a 200 response to acknowledge receipt of the event
-  res.send(200).json({
+  res.sendStatus(200).json({
     received: true,
   });
 };
