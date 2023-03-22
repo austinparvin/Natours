@@ -49,7 +49,11 @@ if (process.env.NODE_ENV === 'development') {
 
 app.use('/api', limiter);
 
-app.post('/webhook-checkout', express.raw({ type: 'application/json'}), webhookCheckout);
+app.post(
+  '/webhook-checkout',
+  express.raw({ type: 'application/json' }),
+  webhookCheckout
+);
 
 // Body parser, reading data from the body into req.body
 app.use(

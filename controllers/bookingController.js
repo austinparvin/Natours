@@ -10,6 +10,7 @@ const {
   getAll,
 } = require('./handlerFactory');
 const User = require('../models/userModel');
+const Tour = require('../models/tourModel');
 
 const getCheckoutSession = catchAsync(async (req, res, next) => {
   const { tourId } = req.params;
@@ -60,6 +61,13 @@ const webhookCheckout = (req, res, next) => {
     return;
   }
 
+  const createBookingSession = catchAsync(async (session) => {
+    const tour = session.client_reference_id;
+    const user = (await User.findOne({ email: session.customer_email })).id;
+    const price = session.line_items[0].price_data.unit_amount;
+    await Booking.create({ tour, user, price });
+  });
+
   // Handle the event
   switch (event.type) {
     case 'checkout.session.completed':
@@ -76,13 +84,6 @@ const webhookCheckout = (req, res, next) => {
     received: true,
   });
 };
-
-const createBookingSession = catchAsync(async (session) => {
-  const tour = session.client_reference_id;
-  const user = (await User.findOne({ email: session.customer_email })).id;
-  const price = session.line_items[0].price_data.unit_amount;
-  await Booking.create({ tour, user, price });
-});
 
 const getAllBookings = getAll(Booking);
 const createBooking = createOne(Booking);
