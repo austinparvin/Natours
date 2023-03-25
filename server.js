@@ -4,6 +4,7 @@ const app = require('./app');
 
 process.on('uncaughtException', (err) => {
   console.log(err.name, err.message);
+  console.log(err.stack);
   console.log('UNCAUGHT EXCEPTION 💥 Shutting down...');
 
   process.exit(1);
@@ -35,6 +36,6 @@ process.on('unhandledRejection', (err) => {
 process.on('SIGTERM', () => {
   console.log('👋 SIGTERM RECEIVED. Shutting down gracefully');
   server.close(() => {
-    console.log('💥 Process terminated!')
+    console.log('💥 Process terminated!');
   });
 });
